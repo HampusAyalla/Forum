@@ -4,6 +4,7 @@ import mysql.connector
 app = Flask(__name__)
 app.secret_key = "nyckel"
 
+# Kopplar databas via Xampp
 def get_db():
     return mysql.connector.connect(
         host="localhost",
@@ -12,11 +13,23 @@ def get_db():
         database="forum"
     )
 
+#Köra sql
 def query(sql, params=(), fetchone=False):
     db = get_db()
     cursor = db.cursor(dictionary=True)
     cursor.execute(sql, params)
 
+    if sql.strip().lower().startswith("select"):
+            result = cursor.fetchone() if fetchone else cursor.fetchall()
+    else:
+            db.commit()
+            result = None
+
+            cursor.close()
+            db.close()
+            return result
+    
+#Visa alla inlägg
 @app.route("/")
 def index():
     topics = query("""
@@ -31,5 +44,30 @@ def index():
 @app.route("/")
 def index():
     return render_template("Index.html")
+
+
+#Logga in med de färdiga användarna
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        u = request.form["username"] #Hämta från formulär
+        p = request.form["password"] #Hämta från formulär
+
+        #Kollar om användaren som angetts finns i XAMPP databasen
+        user = query(
+            "SELECT * FROM users WHERE username=%s AND password=%s",
+            (u, p),
+            fetchone=True
+        )
+
+        #Om användaren hittas så ska man gå vidare med att logga in
+        if user:
+            session["user"] = user
+            return redirect("/")
+        #Annars om den inte finns, kommer ett error
+        else:
+            return render_template("login.html", error="Fel användarnamn eller lösenord")
+
+    return render_template("login.html")
 
 

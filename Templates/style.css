@@ -1,0 +1,38 @@
+body {
+background-color: lightgray;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 90vh;
+}
+
+form {
+background-color: #fff;
+padding: 30px 40px;
+border-radius: 12px;
+display: flex;
+flex-direction: column;
+gap: 15px;
+width: 600px;
+}
+
+input {
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 4px;
+font-size: 14px;
+}
+
+button {
+padding: 16px;
+background-color: lime;
+color: white;
+border-radius: 4px;
+cursor: pointer;
+}
+
+button:hover {
+background-color: #45a049;
+}
+
+
