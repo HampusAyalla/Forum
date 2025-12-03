@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="/static/style.css">
     <title>Forum för fårskallar</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <h1>Forum för fårskallar</h1>
 
-{% if user %}
-    <p>Inloggad som <b>{{ user.fullname }}</b> — <a href="/logout">Logga ut</a></p>
-    <a href="/new_topic">Skapa ny tråd</a>
-{% else %}
-    <a href="/login">Logga in</a>
-{% endif %}
+<div style="text-align:center; margin-bottom:20px;">
+    <a href="/new">Skapa ett nytt inlägg</a> |
+    <a href="/login">Login</a>
+</div>
 
-<h2>Trådar</h2>
-
-{% for t in topics %}
-    <div>
-        <a href="/topic/{{ t.id }}"><b>{{ t.title }}</b></a><br>
-        <small>Skapad av {{ t.fullname }} - {{ t.created }}</small>
+<div class="topic-list">
+    {% for t in topics %}
+    <div class="topic">
+        <div class="topic-title">{{ t.title }}</div>
+        <div class="topic-info">By {{ t.username }}</div>
     </div>
-<hr>
-{% endfor %}
+    {% endfor %}
+</div>
+
 </body>
 </html>

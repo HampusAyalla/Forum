@@ -66,8 +66,26 @@ def login():
             return redirect("/")
         #Annars om den inte finns, kommer ett error
         else:
-            return render_template("login.html", error="Fel användarnamn eller lösenord")
+            return render_template("login.html", error="Fel användarnamn eller lösenord!")
 
     return render_template("login.html")
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
+#Skapa nytt topic
+@app.route("/new_topic", methods=["GET", "POST"])
+def new_topic():
+    if "user" not in session:
+        return redirect("/login")
+
+    if request.method == "POST":
+        title = request.form["title"]
+        user_id = session["user"]["id"]
+
+
+#För att kunna starta forumet(servern)
+if __name__ == "__main__":
+    app.run(debug=True)

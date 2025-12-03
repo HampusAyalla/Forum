@@ -1,24 +1,19 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Ny tråd till forum</title>
+    <title>Nytt inlägg</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Skapa ny tråd här!</h1>
-
-<form action="/new_topic" method="post">
-    <label>Rubrik:</label><br>
-    <input type="text" name="title" required><br><br>
-    <label>Innehåll:</label><br>
-    <input type="text" name="content" required><br><br>
-    <input type="submit" value="Skapa tråd">
-</form>
-
-<br>
-<a href="/">Gå tillbaka</a>
+<div class="container">
+    <h2>Skapa inlägg</h2>
+    <form method="POST">
+        <input type="text" name="title" placeholder="Rubrik" required>
+        <textarea name="content" rows="5" placeholder="Innehål" required></textarea>
+        <button type="submit">Post</button>
+    </form>
+</div>
 
 </body>
 </html>
